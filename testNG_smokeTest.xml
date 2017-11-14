@@ -1,0 +1,22 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Drive2. Smoke test." preserve-order="true">
+    <listeners>
+        <listener class-name="testNGFeatures.TestListeners"/>
+        <!-- <listener class-name="ru.drive2.TestNGFeatures.AnnotationTransformer"/> -->
+    </listeners>
+    <test name="Testing Login" preserve-order="true">
+        <classes>
+            <class name="testCases.LoginTest"/>
+        </classes>
+    </test>
+    <test name="Testing chat/messages" preserve-order="true">
+             <classes>
+                 <class name="testCases.ChatTest"/>
+             </classes>
+         </test>
+   <!-- <test name="Testing home page" preserve-order="true">
+         <classes>
+             <class name="testCases.HomePageTest"/>
+         </classes>
+     </test> -->
+</suite>
