@@ -35,7 +35,8 @@ public class SetupConnection {
 		cap = new DesiredCapabilities();
 
 		cap.setCapability(MobileCapabilityType.PLATFORM_NAME, MobilePlatform.ANDROID);
-		cap.setCapability(MobileCapabilityType.DEVICE_NAME, "Android device");
+		//cap.setCapability(MobileCapabilityType.DEVICE_NAME, "Android device");
+		cap.setCapability(MobileCapabilityType.DEVICE_NAME, "Android emulator");
 		cap.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, "200");
 		//cap.setCapability(MobileCapabilityType.BROWSER_NAME, MobileBrowserType.CHROME);
 		// cap.setCapability("recreateChromeDriverSessions", true);

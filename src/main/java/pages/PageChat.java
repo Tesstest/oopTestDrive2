@@ -24,83 +24,52 @@ public class PageChat extends BasePage {
 	@FindBy(id = "com.drive2:id/item_chat_title")
 	WebElement userDialog;
 
-
 	public String getTheTitle() {
 		String currentTitle = "";
 
-		//System.out.println( driver.getContext());
 		By locatorTitle = new By.ByXPath("//android.widget.TextView[@index='0']");
-		if (driver.findElement(locatorTitle).isDisplayed()){
-
-		}
 		currentTitle = getScreenTitle(locatorTitle, 90);
 
 		exTest.log(LogStatus.INFO, "Verify title...");
-
 		return currentTitle;
 	}
 
-	public PageChat tapOnUser(String serviceUserName) {
+	public PageChat findAndTapOnUser(String serviceUserName) {
 
+		boolean userIsFounded = false;
+		By serviceUser = new By.ByXPath("//android.widget.TextView[contains(@text, 'Dina')]");
 		try {
-			WebElement elUser = driver.findElementByAndroidUIAutomator(
-					"new UiScrollable(new UiSelector()).scrollIntoView(text(\"" + serviceUserName + "\"));");
+			WebElement elUser = waitForElement(serviceUser, 10);
 			elUser.click();
-
-			exTest.log(LogStatus.INFO, "Tap on dialog with service-user...");
+			userIsFounded = true;
 
 		} catch (Exception e) {
-			String textError = "Could not find service-user " + serviceUserName;
-			System.out.println(textError);
+			System.out.println("will swipe...");
+		};
 
-			exTest.log(LogStatus.ERROR, textError);
+		if (!userIsFounded){
+			for (int i = 0; i < 3; i++){
+				swipeDown(60, -40);
+				try {
+					WebElement elUser = waitForElement(serviceUser, 10);
+					elUser.click();
+					userIsFounded = true;
+
+					break;
+				} catch (Exception e) {
+					System.out.println("swipe # " + i);
+				}
+			}
+		}
+		if (userIsFounded){
+			exTest.log(LogStatus.INFO, "Tap on dialog with service-user...");
+
+		} else {
+			exTest.log(LogStatus.ERROR, "Service-user is not found!");
+
 		}
 
 		return this;
-
-		/*
-		 * ("new UiScrollable(new UiSelector()"
-		 * +"resourceID(\"com.drive2:id/item_chat_title\")).scrollIntoView("
-		 * +"new UiSelector().text(\"BusinessSupport\"));").click();
-		 * 
-		 */
-
-		/*
-		 * WebElement elUser = method.waitForElements(locator, timeout)
-		 * 
-		 * TouchAction action = new TouchAction(driver); action.moveTo(elUser);
-		 */
-
-		/*
-		 * By userLocator = By.xpath("android.widget.TextView");
-		 * System.out.println(".. PageChat.tapOnUser .... try to find");
-		 * List<WebElement> users = method.waitForElements(userLocator, 90);
-		 * WebElement serviceUser = null;
-		 * 
-		 * System.out.println("length is " + users.size());
-		 * 
-		 * for (WebElement user : users){ String userName = user.getText();
-		 * 
-		 * System.out.println("Usr name is " + userName);
-		 * 
-		 * if( userName == serviceUserName){ serviceUser = user; break; } else{
-		 * exTest.log(LogStatus.ERROR, "Service user is not found!");
-		 * System.out.println("Service user is not found!"); }
-		 * 
-		 * }
-		 */
-
-		// String stringXpath = "//android.widget.TextView and @text = " +
-		// userName;
-		// By dialogWithUser = By.xpath(stringXpath);
-		// WebElement elDialogWithUser = method.waitForElement(dialogWithUser,
-		// 60);
-		// elDialogWithUser.click();
-
-		// WebElement elUserDialog =
-		// method.waitForVisibilityOfElement(userDialog, 60);
-		// elUserDialog.click();
-
 	}
 
 	public PageChat tapOnButtonSendMessage() {
@@ -137,22 +106,25 @@ public class PageChat extends BasePage {
 
 	}
 
-//	public PageChat sendPhoto(File file) {
+	public PageChat sendPhoto(File file) {
 
-//		try {
-//			By locatorMessage = new By.ById("com.drive2:id/chat_message");
-//			waitForElement(locatorMessage, 20).sendKeys(file);
-//
-//			exTest.log(LogStatus.INFO, "Type text-message...");
-//
-//		} catch (Exception e) {
-//			String textError = "Could not type a message ";
-//			System.out.println(textError);
-//			exTest.log(LogStatus.ERROR, textError);
-//		}
-//
-//		return this;
-//	}
+		try {
+
+
+
+			By locatorMessage = new By.ById("com.drive2:id/chat_message");
+			//waitForElement(locatorMessage, 20).sendKeys(file);
+
+			exTest.log(LogStatus.INFO, "Type text-message...");
+
+		} catch (Exception e) {
+			String textError = "Could not type a message ";
+			System.out.println(textError);
+			exTest.log(LogStatus.ERROR, textError);
+		}
+
+		return this;
+	}
 
 	public String findSentMessage(String text) {
 
@@ -189,19 +161,22 @@ public class PageChat extends BasePage {
 		Thread.sleep(9000);
 		return this;
 	}
-	public PageChat swipe() {
-		Dimension screenSize;
-		screenSize = driver.manage().window().getSize();
 
-		int startx = screenSize.width / 2;
-		int starty = (int) (screenSize.height * 0.80);
-		int endy = (int) (screenSize.height * 0.20);
+    public Gallery tapOnButtonPhoto() {
+		Gallery gallery = null;
+		By btnPhoto = new By.ById("com.drive2:id/chat_attachment_button");
 
-		TouchAction action = new TouchAction(driver);
+		try {
+			waitForElement(btnPhoto, 30);
+			gallery = new Gallery(driver, exTest);
+			exTest.log(LogStatus.INFO, "Tap on btn Photo...");
 
-		action.press(startx, starty).moveTo(0, -1000).release().perform();
+		} catch (Exception e) {
+			String textError = "Could not find btn Photo!";
+			System.out.println(textError);
+			exTest.log(LogStatus.ERROR, textError);
 
-		return this;
+		}
+		return gallery;
 	}
-
 }

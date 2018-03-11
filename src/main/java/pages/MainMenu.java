@@ -74,7 +74,7 @@ public class MainMenu extends BasePage{
 		PageChat pageChat = null;
 
 		try {
-			WebElement elBtnChat = waitForVisibilityOfElement(btnChat, 20);
+			WebElement elBtnChat = waitForVisibilityOfElement(btnChat, 60);
 			elBtnChat.click();
 			pageChat = new PageChat(driver, exTest);
 

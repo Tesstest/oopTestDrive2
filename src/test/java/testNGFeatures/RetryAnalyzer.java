@@ -5,7 +5,7 @@ import org.testng.ITestResult;
 
 public class RetryAnalyzer implements IRetryAnalyzer {
 	int counter = 0;
-	int retryLimit = 1;
+	int retryLimit = 2;
 
 	/*
 	 * (non-Javadoc)
@@ -22,12 +22,43 @@ public class RetryAnalyzer implements IRetryAnalyzer {
 	 */
 	@Override
 	public boolean retry(ITestResult result) {
-		if (result.getStatus() == 2 & counter < retryLimit) {
+
+		if (counter < retryLimit) {
+
+			System.out.println("before (skipped): " + result.getTestContext().getSkippedTests().size());
+			System.out.println("before (failed): " + result.getTestContext().getFailedTests().size());
+			System.out.println("before (passped): " + result.getTestContext().getPassedTests().size());
+			result.getTestContext().getFailedTests().removeResult(result);
 			counter++;
+
+
 			return true;
 		} else {
+			System.out.println("before (skipped): " + result.getTestContext().getSkippedTests().size());
+			System.out.println("before (failed): " + result.getTestContext().getFailedTests().size());
+			System.out.println("before (passped): " + result.getTestContext().getPassedTests().size());
+
 			return false;
 		}
+
+
+//		if (result.getStatus() == 2 & counter < retryLimit) {
+//			System.out.println("before (skipped): " + result.getTestContext().getSkippedTests().size());
+//			System.out.println("before (failed): " + result.getTestContext().getFailedTests().size());
+//			System.out.println("before (passped): " + result.getTestContext().getPassedTests().size());
+//
+//			result.getTestContext().getFailedTests().removeResult(result);
+//
+//			System.out.println("afetr (skipped): " + result.getTestContext().getSkippedTests().size());
+//			System.out.println("after (failed): " + result.getTestContext().getFailedTests().size());
+//			System.out.println("after (passped): " + result.getTestContext().getPassedTests().size());
+//
+//			counter++;
+//			return true;
+//
+//		} else {
+//			return false;
+//		}
 	}
 
 }

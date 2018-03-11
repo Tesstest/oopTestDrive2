@@ -63,7 +63,7 @@ public class LoginTest extends SetupConnection {
 
 		LoginByEmailPage loginByEmail = new LoginPage(driver, exTest).clickOnBtnEmail();
 
-		loginByEmail.typeEmail("d@gmail.com").typePassword("1").clickOnButtonEnter(wrongCredentials); // homePage
+		loginByEmail.typeEmail("d@g.com").typePassword("1").clickOnButtonEnter(wrongCredentials); // homePage
 
 		String currentTitle = loginByEmail.getTheTitle();
 
@@ -93,7 +93,8 @@ public class LoginTest extends SetupConnection {
 		HomePage homePage = loginByVK.typeEmail("dforshop@gmail.com").typePassword("qAlityAssurance17")
 				.clickOnButtonLogin();
 
-		Thread.sleep(10000);
+		Thread.sleep(2000);
+		homePage = new HomePage(driver, exTest);
 		boolean carOfTheDayIsPresent = homePage.carOfTheDayIsPresent();
 		if (carOfTheDayIsPresent){
 			exTest.log(LogStatus.PASS, "Verify Login By VKontakte Is Performed");

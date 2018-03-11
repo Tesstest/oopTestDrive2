@@ -46,7 +46,7 @@ public class LoginByVKontaktePage extends BasePage {
         HomePage homePage = null;
 
         try {
-            By btnLogIn = new By.ByXPath("//android.widget.Button[@text='Log in']");
+            By btnLogIn = new By.ByXPath("//android.widget.Button[@content-desc ='Log in']");
             waitForElement(btnLogIn, 30).click();
             homePage = new HomePage(driver, exTest);
 

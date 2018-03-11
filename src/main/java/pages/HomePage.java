@@ -31,8 +31,8 @@ public class HomePage extends BasePage {
         boolean carOfTheDayIsPresent = false;
 
         try {
-            getContext("WEBVIEW");
-            String textCarOfTheDay = getCarOfTheDay().getAttribute("innerHTML");
+           getContext("WEBVIEW");
+           String textCarOfTheDay = getCarOfTheDay().getAttribute("innerHTML");
 
             if (textCarOfTheDay.contains("Машина дня")) {
                 carOfTheDayIsPresent = true;
@@ -88,15 +88,10 @@ public class HomePage extends BasePage {
         String className = this.getClass().getName();
         String currentTitle = "";
 
-        try {
-            By locatorTitle = new By.ByXPath("//android.widget.TextView[@index='0']");
-            currentTitle = getScreenTitle(locatorTitle, 90);
-            exTest.log(LogStatus.INFO, "Verified title of the page. Title is " + currentTitle);
+        By locatorTitle = new By.ByXPath("//android.widget.TextView[@index='0']");
+        currentTitle = getScreenTitle(locatorTitle, 90);
 
-        } catch (Exception e) {
-            exTest.log(LogStatus.ERROR, "Couldn't get the title of the page " + className);
-
-        }
+        exTest.log(LogStatus.INFO, "Verified title of the page. Title is " + currentTitle);
         return currentTitle;
     }
 }
